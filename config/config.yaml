@@ -1,0 +1,6 @@
+local-cores: 8
+cores: 300
+latency-wait: 60
+use-conda: true
+jobname: myco_lofreq_{name}.jobid{jobid}
+

@@ -1,0 +1,12 @@
+name: snakemake_myco
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - snakemake=5.25
+  - drmaa
+  - xlrd
+  - pyyaml
+  - pandas
+

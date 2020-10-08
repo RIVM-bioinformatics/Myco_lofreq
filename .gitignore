@@ -1,0 +1,7 @@
+# Folders to ignore
+.snakemake/
+out/
+raw_data/
+
+# Files to ignore
+sample_sheet.yaml

@@ -1,0 +1,8 @@
+name: bwa_lofreq
+channels:
+  - bioconda
+  - defaults
+dependencies:
+  - lofreq
+  - samtools
+  - bwa

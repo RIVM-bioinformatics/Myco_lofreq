@@ -1,0 +1,6 @@
+name: picard
+channels:
+  - bioconda
+  - defaults
+dependencies:
+  - picard
