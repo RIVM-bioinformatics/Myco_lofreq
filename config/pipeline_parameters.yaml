@@ -18,6 +18,9 @@ Trimmomatic:
 bwa:
     ref_genome: '/mnt/db/Myco_lofreq_files/refgenome_H37Rv3.fasta'
 
+vcf_annotator: 
+    annotated_genome: '/mnt/db/Myco_lofreq_files/Genebank/GCF_000195955.2_ASM19595v2_genomic.gbff'
+
 
 ######################################
 ### Technical parameters           ###
@@ -25,6 +28,7 @@ bwa:
 
 threads:
     trimmomatic: 4
-    bwa: 8
+    bwa: 12
     picard: 4
-    lofreq: 8
+    lofreq: 12
+    annotated_vcf: 1

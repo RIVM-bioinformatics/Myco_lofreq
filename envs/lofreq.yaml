@@ -3,6 +3,6 @@ channels:
   - bioconda
   - defaults
 dependencies:
-  - lofreq
-  - samtools
-  - bwa
+  - lofreq=2.1.3
+  - samtools=1.9
+  - bwa=0.7.17

@@ -5,3 +5,6 @@ raw_data/
 
 # Files to ignore
 sample_sheet.yaml
+config/variables.yaml
+.gitignore
+config/pipeline_parameters.yaml

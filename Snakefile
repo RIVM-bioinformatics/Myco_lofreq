@@ -67,6 +67,7 @@ include: "bin/rules/bwa_alignment.smk"
     ##### Low-frequency variants analysis    #####
     #############################################################################
 include: "bin/rules/lofreq_call.smk"
+include: "bin/rules/vcf_annotator.smk"
 
 
 #@################################################################################
@@ -141,4 +142,5 @@ rule all:
         #expand(str(OUT / "bwa_alignment/{sample}_alignment.bam"), sample = SAMPLES),
         expand(str(OUT / "bwa_alignment/{sample}_markdup.bam"), sample = SAMPLES),
         expand(str(OUT / "lofreq/{sample}_lofreq_aln.bam"), sample = SAMPLES),
-        expand(str(OUT / "lofreq/{sample}.vcf"), sample = SAMPLES)
+        expand(str(OUT / "lofreq/{sample}.vcf"), sample = SAMPLES),
+        expand(str(OUT / "annotated_vcf/{sample}_annotated.vcf"), sample = SAMPLES)

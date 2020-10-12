@@ -309,7 +309,7 @@ if [ -e sample_sheet.yaml ]; then
     eval $(parse_yaml config/variables.yaml "config_")
     snakemake -s Snakefile --profile config --drmaa " -q bio -n {threads} -R \"span[hosts=1]\"" --drmaa-log-dir out/log/drmaa ${@}
     #echo -e "\nUnique identifier for this run is: $config_run_identifier "
-    echo -e "bac gastro run complete"
+    echo -e "Myco_lofreq run complete"
     set -ue #turn bash strict mode back on
 else
     echo -e "Sample_sheet.yaml could not be found"

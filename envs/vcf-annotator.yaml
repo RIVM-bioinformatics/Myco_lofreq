@@ -1,7 +1,6 @@
-name: bwa
+name: vcf-annotator
 channels:
   - bioconda
   - defaults
 dependencies:
-  - bwa=0.7.17
-  - samtools
+  - vcf-annotator=0.6
