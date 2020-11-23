@@ -15,6 +15,8 @@ rule trimmomatic:
     benchmark:
         str(OUT / "log/benchmark/trimmomatic_{sample}.txt")
     threads: config["threads"]["trimmomatic"]
+    resources:
+        mem_mb=config["mem_mb"]["trimmomatic"]
     log:
         str(OUT / "log/trimmomatic/trimmomatic_{sample}.log")
     params:

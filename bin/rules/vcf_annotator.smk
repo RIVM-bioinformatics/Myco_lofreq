@@ -6,13 +6,15 @@ rule vcf_annotator:
     input:
         str(OUT / "lofreq/{sample}.vcf")
     output:
-        var=str(OUT / "annotated_vcf/{sample}.vcf"),
+        var=temp(str(OUT / "annotated_vcf/{sample}.vcf")),
         annot_var=str(OUT / "annotated_vcf/{sample}_annotated.vcf")
     conda:
         "../../envs/vcf-annotator.yaml"
     benchmark:
         str(OUT / "log/benchmark/annotated_vcf_{sample}.txt")
     threads: config["threads"]["annotated_vcf"]
+    resources:
+        mem_mb=config["mem_mb"]["annotated_vcf"]
     log:
         str(OUT / "log/annotated_vcf/annotated_vcf_{sample}.log")
     params:

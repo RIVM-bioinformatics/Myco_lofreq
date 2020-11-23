@@ -27,8 +27,15 @@ vcf_annotator:
 ######################################
 
 threads:
+    fastqc: 2
     trimmomatic: 4
     bwa: 12
-    picard: 4
     lofreq: 12
     annotated_vcf: 1
+
+mem_mb:
+    trimmomatic: 6000
+    fastqc: 6000
+    bwa: 10000
+    lofreq: 10000
+    annotated_vcf: 1000

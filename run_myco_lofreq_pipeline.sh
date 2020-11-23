@@ -137,55 +137,11 @@ if [ "${CLEAN:-}" == "TRUE" ]; then
 fi
 
 
-
-#### MAKE SURE CONDA WORKS ON ALL SYSTEMS
-rcfile="${HOME}/.myco_lofreq_src"
-conda_loc=$(which conda)
-
-
-if [ ! -f "${rcfile}" ]; then
-    if [ ! -z "${conda_loc}" ]; then
-
-    #> I ripped this block from jovian
-    #> Check https://github.com/DennisSchmitz/Jovian for the source code
-    #> The specific file is bin/includes/Install_miniconda
-    #> relevant lines are FROM line #51
-    #>
-
-    condadir="${conda_loc}"
-    basedir=$(echo "${condadir}" | rev | cut -d'/' -f3- | rev)
-    etcdir="${basedir}/etc/profile.d/conda.sh"
-    bindir="${basedir}/bin"
-
-    touch "${rcfile}"
-    cat << EOF >> "${rcfile}"
-if [ -f "${etcdir}" ]; then
-    . "${etcdir}"
-else
-    export PATH="${bindir}:$PATH"
-fi
-
-export -f conda
-export -f __conda_activate
-export -f __conda_reactivate
-export -f __conda_hashr
-export -f __add_sys_prefix_to_path
-EOF
-
-    cat << EOF >> "${HOME}/.bashrc"
-if [ -f "${rcfile}" ]; then
-    . "${rcfile}"
-fi
-EOF
-
-    fi 
-
-fi
-
-
-
-source "${HOME}"/.bashrc
-
+###############################################################################################################
+##### Create mamba environment if it doesn exist                                                          #####
+###############################################################################################################
+conda env update -f envs/mamba.yaml -q -v
+source activate mamba
 
 
 ###############################################################################################################
@@ -203,37 +159,35 @@ fi
 if [[ $PATH != *${MASTER_NAME}* ]]; then # If the master environment is not in your path (i.e. it is not currently active), do...
     line
     spacer
-    set +ue # Turn bash strict mode off because that breaks conda
-    conda activate "${MASTER_NAME}" # Try to activate this env
-    if [ ! $? -eq 0 ]; then # If exit statement is not 0, i.e. master conda env hasn't been installed yet, do...
-        installer_intro
-        if [ "${SKIP_CONFIRMATION}" = "TRUE" ]; then
-            echo -e "\tInstalling master environment..." 
-            conda env create -f ${PATH_MASTER_YAML} 
-            conda activate "${MASTER_NAME}"
-            echo -e "DONE"
-        else
-            while read -r -p "The master environment hasn't been installed yet, do you want to install this environment now? [y/N] " envanswer
-            do
-                envanswer=${envanswer,,}
-                if [[ "${envanswer}" =~ ^(yes|y)$ ]]; then
-                    echo -e "\tInstalling master environment..." 
-                    conda env create -f ${PATH_MASTER_YAML}
-                    conda activate "${MASTER_NAME}"
-                    echo -e "DONE"
-                    break
-                elif [[ "${envanswer}" =~ ^(no|n)$ ]]; then
-                    echo -e "The master environment is a requirement. Exiting because myco_lofreq cannot continue without this environment"
-                    exit 1
-                else
-                    echo -e "Please answer with 'yes' or 'no'"
-                fi
-            done
-        fi
+    source activate ${MASTER_NAME}
+    if [ ! $? -eq 0 ]; then
+    	set +ue # Turn bash strict mode off because that breaks conda
+    	if [ "${SKIP_CONFIRMATION}" = "TRUE" ]; then
+       		echo -e "\tInstalling master environment..." 
+       		mamba env update -f ${PATH_MASTER_YAML} 
+       		echo -e "DONE"
+    	else
+       		while read -r -p "The master environment hasn't been installed yet, do you want to install this environment now? [y/n] " envanswer
+       		do
+            		envanswer=${envanswer,,}
+            		if [[ "${envanswer}" =~ ^(yes|y)$ ]]; then
+                		echo -e "\tInstalling master environment..." 
+				mamba env update -f ${PATH_MASTER_YAML}
+                		echo -e "DONE"
+                		break
+            		elif [[ "${envanswer}" =~ ^(no|n)$ ]]; then
+                		echo -e "The master environment is a requirement. Exiting because Juno cannot continue without this environment"
+                		exit 1
+            		else
+                		echo -e "Please answer with 'yes' or 'no'"
+            		fi
+        	done
+    	fi
     fi
+    source activate "${MASTER_NAME}"
     set -ue # Turn bash strict mode on again
-    echo -e "Succesfully activated master environment"
 fi
+
 
 
 if [ "${SNAKEMAKE_UNLOCK}" == "TRUE" ]; then

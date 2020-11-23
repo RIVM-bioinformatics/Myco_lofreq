@@ -13,13 +13,16 @@ rule multiqc:
         "../../envs/multiqc.yaml"
     benchmark:
         str(OUT / "log/benchmark/MultiQC.txt")
-    threads: 1
+    threads: config["threads"]["fastqc"]
+    resources:
+        mem_mb=config["mem_mb"]["fastqc"]
     params:
-        output_dir=str(OUT / "MultiQC")
+        output_dir=str(OUT / "MultiQC"),
+        config_file="files/multiqc_config.yaml"
     log:
         str(OUT / "log/multiqc/MultiQC_report.log")
     shell:
         """
-multiqc --force \
+multiqc --force --config {params.config_file} \
 -o {params.output_dir} -n multiqc.html {input} > {log} 2>&1
     """

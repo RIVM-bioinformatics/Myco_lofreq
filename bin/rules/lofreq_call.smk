@@ -6,15 +6,17 @@ rule lofreq_call:
     input:
         bam=str(OUT / "bwa_alignment/{sample}_markdup.bam")
     output:
-        viterbi=str(OUT / "lofreq/{sample}_viterbi.bam"),
-        aln=str(OUT / "lofreq/{sample}_lofreq_aln.bam"),
-        index=str(OUT / "lofreq/{sample}_lofreq_aln.bai"),
+        viterbi=temp(str(OUT / "lofreq/{sample}_viterbi.bam")),
+        aln=temp(str(OUT / "lofreq/{sample}_lofreq_aln.bam")),
+        index=temp(str(OUT / "lofreq/{sample}_lofreq_aln.bai")),
         var=str(OUT / "lofreq/{sample}.vcf")
     conda:
         "../../envs/lofreq.yaml"
     benchmark:
         str(OUT / "log/benchmark/lofreq_{sample}.txt")
     threads: config["threads"]["lofreq"]
+    resources:
+        mem_mb=config["mem_mb"]["lofreq"]
     log:
         str(OUT / "log/lofreq/lofreq_{sample}.log")
     params:

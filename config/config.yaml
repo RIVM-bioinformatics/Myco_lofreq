@@ -3,4 +3,6 @@ cores: 300
 latency-wait: 60
 use-conda: true
 jobname: myco_lofreq_{name}.jobid{jobid}
-
+keep-going: true
+printshellcmds: true
+conda-frontend: mamba

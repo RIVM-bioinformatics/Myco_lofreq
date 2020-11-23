@@ -92,8 +92,8 @@ onstart:
         mkdir -p {OUT}/results
         echo -e "\nLogging pipeline settings..."
         echo -e "\tGenerating methodological hash (fingerprint)..."
-        #echo -e "This is the link to the code used for this analysis:\thttps://github.com/**********$(git log -n 1 --pretty=format:"%H")" > '{OUT}/results/log_git.txt'
-        #echo -e "This code with unique fingerprint $(git log -n1 --pretty=format:"%H") was committed by $(git log -n1 --pretty=format:"%an <%ae>") at $(git log -n1 --pretty=format:"%ad")" >> '{OUT}/results/log_git_myco_lofreq.txt'
+        echo -e "This is the link to the code used for this analysis:\thttps://github.com/AleSR13/Myco_lofreq/tree/$(git log -n 1 --pretty=format:"%H")" > '{OUT}/results/log_git_myco_lofreq.txt'
+        echo -e "This code with unique fingerprint $(git log -n1 --pretty=format:"%H") was committed by $(git log -n1 --pretty=format:"%an <%ae>") at $(git log -n1 --pretty=format:"%ad")" >> '{OUT}/results/log_git_myco_lofreq.txt'
         echo -e "\tGenerating full software list of current Conda environment (\"myco_lofreq_master\")..."
         conda list > '{OUT}/results/log_conda_myco_lofreq.txt'
         echo -e "\tGenerating config file log..."
@@ -139,8 +139,4 @@ rule all:
         expand(str(OUT / "trimmomatic/{sample}_{read}.fastq"), sample = SAMPLES, read = ['pR1', 'pR2', 'uR1', 'uR2']),
         expand(str(OUT / "FastQC_posttrim/{sample}_{read}_fastqc.zip"), sample = SAMPLES, read = ['pR1', 'pR2', 'uR1', 'uR2']),
         str(OUT / "MultiQC/multiqc.html"),
-        #expand(str(OUT / "bwa_alignment/{sample}_alignment.bam"), sample = SAMPLES),
-        expand(str(OUT / "bwa_alignment/{sample}_markdup.bam"), sample = SAMPLES),
-        expand(str(OUT / "lofreq/{sample}_lofreq_aln.bam"), sample = SAMPLES),
-        expand(str(OUT / "lofreq/{sample}.vcf"), sample = SAMPLES),
         expand(str(OUT / "annotated_vcf/{sample}_annotated.vcf"), sample = SAMPLES)

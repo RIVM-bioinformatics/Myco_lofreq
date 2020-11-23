@@ -12,7 +12,9 @@ rule fastqc_trimmed_data:
         "../../envs/fastqc_trimmomatic.yaml"
     benchmark:
         str(OUT / "log/benchmark/QC_clean_data_{sample}_{read}.txt")
-    threads: 1
+    threads: config["threads"]["fastqc"]
+    resources:
+        mem_mb=config["mem_mb"]["fastqc"]
     log:
         str(OUT / "log/fastqc/QC_clean_data_{sample}_{read}.log")
     params:
