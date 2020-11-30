@@ -1,6 +1,5 @@
 # Location and name of the sample_sheet:
 sample_sheet: sample_sheet.yaml
-out: out
 
 ######################################
 ### Software parameters            ###

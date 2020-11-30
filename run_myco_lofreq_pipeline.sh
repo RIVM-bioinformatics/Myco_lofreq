@@ -261,7 +261,7 @@ if [ -e sample_sheet.yaml ]; then
     echo -e "pipeline_run:\n    identifier: ${UNIQUE_ID}" > config/variables.yaml
     echo -e "Server_host:\n    hostname: http://${SET_HOSTNAME}" >> config/variables.yaml
     eval $(parse_yaml config/variables.yaml "config_")
-    snakemake -s Snakefile --profile config --drmaa " -q bio -n {threads} -R \"span[hosts=1]\"" --drmaa-log-dir out/log/drmaa ${@}
+    snakemake --profile config --config out=${OUTPUT_DIR} --drmaa " -q bio -n {threads} -R \"span[hosts=1]\"" --drmaa-log-dir ${OUTPUT_DIR}/log/drmaa ${@}
     #echo -e "\nUnique identifier for this run is: $config_run_identifier "
     echo -e "Myco_lofreq run complete"
     set -ue #turn bash strict mode back on

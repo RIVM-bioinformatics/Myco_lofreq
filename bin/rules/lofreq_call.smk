@@ -33,5 +33,3 @@ samtools index -@ {threads} {output.aln} {output.index} 2> {log}
 lofreq call-parallel --pp-threads {threads} --call-indels -f {params.ref_genome} -o {output.var} {output.aln} 2> {log}
 
         """
-
-#lofreq alnqual -b -u - {params.ref_genome} | \ ####after indelqual

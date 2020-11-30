@@ -9,7 +9,7 @@ rule bwa_alignment:
     output:
         #bam=str(OUT / "bwa_alignment/{sample}_alignment.bam"),
         sorted=temp(str(OUT / "bwa_alignment/{sample}_sorted.bam")),
-        markdup=temp(str(OUT / "bwa_alignment/{sample}_markdup.bam"))
+        markdup=str(OUT / "bwa_alignment/{sample}_markdup.bam")
     conda:
         "../../envs/bwa.yaml"
     benchmark:
@@ -28,6 +28,5 @@ bwa mem {params.ref_genome} {input} \
 | samtools sort -O BAM \
 | tee {output.sorted} \
 | samtools markdup -r - {output.markdup}
-
     """
 

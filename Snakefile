@@ -118,8 +118,8 @@ onsuccess:
     shell("""
         echo -e "\tGenerating HTML index of log files..."
         echo -e "\tGenerating Snakemake report..."
-        snakemake --unlock --profile config
-        snakemake --profile config --report '{OUT}/results/snakemake_report_myco_lofreq.html'
+        snakemake --unlock --profile config --config out={OUT}
+        snakemake --profile config --config out={OUT} --report '{OUT}/results/snakemake_report_myco_lofreq.html'
         echo -e "Finished"
     """)
 
